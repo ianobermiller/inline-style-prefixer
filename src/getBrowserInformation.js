@@ -31,10 +31,8 @@ export default userAgent => {
   Object.keys(vendorPrefixes).forEach(prefix => {
     vendorPrefixes[prefix].forEach(browser => {
       if (info[browser]) {
-        info.prefix = {
-          inline: prefix,
-          CSS: '-' + prefix.toLowerCase() + '-'
-        }
+        info.jsPrefix = prefix
+        info.cssPrefix = '-' + prefix.toLowerCase() + '-'
       }
     })
   })

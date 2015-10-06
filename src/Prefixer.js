@@ -14,8 +14,8 @@ export default class Prefixer {
     this._userAgent = userAgent
     this._browserInfo = getBrowserInformation(userAgent)
 
-    this.cssPrefix = this._browserInfo.prefix.CSS
-    this.jsPrefix = this._browserInfo.prefix.inline
+    this.cssPrefix = this._browserInfo.cssPrefix
+    this.jsPrefix = this._browserInfo.jsPrefix
 
     let data = caniuseData[this._browserInfo.browser]
     if (data) {
@@ -60,8 +60,12 @@ export default class Prefixer {
         }
 
         // resolve plugins
+        let args = assign(
+          {property, value, styles},
+          this._browserInfo
+        )
         plugins.forEach(plugin => {
-          assign(styles, plugin(property, value, this._browserInfo, styles))
+          assign(styles, plugin(args))
         })
       }
     })

@@ -18,7 +18,13 @@ const alternativeProps = {
 const properties = Object.keys(alternativeProps).concat(['alignContent', 'alignSelf', 'display', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection'])
 
 
-export default (property, value, {browser, version, prefix}) => {
+export default ({
+  browser,
+  cssPrefix,
+  property,
+  value,
+  version
+}) => {
   if (properties.indexOf(property) > -1 && browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc') {
     if (property === 'flexDirection') {
       return {
@@ -28,7 +34,7 @@ export default (property, value, {browser, version, prefix}) => {
     }
     if (property === 'display' && alternativeValues[value]) {
       return {
-        display: prefix.CSS + alternativeValues[value]
+        display: cssPrefix + alternativeValues[value]
       }
     }
     return {
